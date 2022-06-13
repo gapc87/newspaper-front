@@ -1,0 +1,95 @@
+<div class="flex justify-between">
+  <h2 class="text-4xl">Dashboard</h2>
+  <a
+    class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-6 text-center"
+    routerLink="/dashboard/new"
+  >
+    Nueva noticia
+  </a>
+</div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="px-6 py-3">
+        Título
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Descripción
+      </th>
+      <th scope="col" class="px-6 py-3">
+        <span class="sr-only">Acciones</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let n of news" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+        {{ n.title }}
+      </th>
+      <td class="px-6 py-4">
+        {{ n.description }}
+      </td>
+      <td class="px-6 py-4 text-right">
+        <button
+          class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2"
+          type="button"
+          (click)="showEditModal(n)"
+        >
+          Editar
+        </button>
+        <button (click)="deleteNew(n.uuid!)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Borrar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-full my-6 mx-auto max-w-4xl">
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+        <h3 class="text-3xl font-semibold">
+          Editar noticia
+        </h3>
+        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
+          <span class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+            ×
+          </span>
+        </button>
+      </div>
+      <div class="relative p-6 flex-auto">
+        <form [formGroup]="editNewForm" (submit)="saveNew()">
+          <div class="mb-6">
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Título</label>
+            <input formControlName="title" type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Título" required>
+            <div *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+                 class="text-sm text-red-500">
+              <div *ngIf="title?.errors?.['required']">
+                El título es requerido.
+              </div>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label for="new" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Noticia</label>
+            <textarea formControlName="description" id="new" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escriba aquí su noticia..."></textarea>
+            <div *ngIf="description?.invalid && (description?.dirty || description?.touched)"
+                 class="text-sm text-red-500">
+              <div *ngIf="description?.errors?.['required']">
+                La noticia es requerida.
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+          >
+            Editar noticia
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

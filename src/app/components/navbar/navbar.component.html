@@ -1,0 +1,33 @@
+<nav class="bg-gray-800 shadow-gray-400 shadow-md px-2 py-2.5">
+  <div class="container mx-auto">
+    <div class="flex flex-wrap justify-between items-center mx-auto max-w-6xl">
+      <a routerLink="/" class="flex items-center">
+        <img src="/assets/images/Newspaper_Cover.svg" class="mr-3 h-6 sm:h-9" alt="Newspaper" />
+        <span class="text-white self-center text-xl font-semibold whitespace-nowrap">Newspaper</span>
+      </a>
+      <div class="flex w-auto justify-between items-center" *ngIf="isLoggedIn | async">
+        <ul class="flex mt-4 space-x-8 mt-0 text-sm font-medium">
+          <li *ngIf="!(isAdmin | async)">
+            <button (click)="toAdmin()" class="block py-2 text-white">Convertirme en ADMIN</button>
+          </li>
+          <li *ngIf="isAdmin | async">
+            <a routerLink="/dashboard" class="block py-2 text-white">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+      <div class="flex" *ngIf="!(isLoggedIn | async); else loggedIn">
+        <a routerLink="/sign-up" class="text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0">Crear cuenta</a>
+        <a routerLink="/sign-in" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0">Iniciar sesión</a>
+      </div>
+      <ng-template #loggedIn>
+        <div class="flex">
+          <span class="text-white text-sm font-bold py-2.5 mr-3">{{ name }}</span>
+          <button
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="logout()">Cerrar sesión</button>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+</nav>

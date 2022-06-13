@@ -1,0 +1,30 @@
+<h2 class="text-4xl mb-6">Nueva noticia</h2>
+
+<form [formGroup]="new" (submit)="createNew()">
+  <div class="mb-6">
+    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Título</label>
+    <input formControlName="title" type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Título" required>
+    <div *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+         class="text-sm text-red-500">
+      <div *ngIf="title?.errors?.['required']">
+        El título es requerido.
+      </div>
+    </div>
+  </div>
+  <div class="mb-6">
+    <label for="new" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Noticia</label>
+    <textarea formControlName="description" id="new" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escriba aquí su noticia..."></textarea>
+    <div *ngIf="description?.invalid && (description?.dirty || description?.touched)"
+         class="text-sm text-red-500">
+      <div *ngIf="description?.errors?.['required']">
+        La noticia es requerida.
+      </div>
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+  >
+    Crear noticia
+  </button>
+</form>
